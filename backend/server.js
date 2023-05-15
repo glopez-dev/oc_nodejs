@@ -18,7 +18,7 @@ function errorHandler(error)
 {
 	if (error.syscall !== 'listen') throw error;
 
-	const address = server.adress();
+	const address = server.address();
 	const bind = (typeof address === 'string') ? ('pipe' + address) : ('port :' + port);
 
 	switch (error.code) 
@@ -32,7 +32,7 @@ function errorHandler(error)
 			process.exit(1);
 			break;
 		default:
-			thow error;
+			throw error;
 	}
 };
 
@@ -40,7 +40,7 @@ const server = http.createServer(app);
 
 server.on('error', errorHandler);
 server.on('listening', () => {
-	const address = server.adress();
+	const address = server.address();
 	const bind = (typeof address === 'string') ? ('pipe' + address) : ('port :' + port);
 	console.log('Listening on ' + bind);
 });
