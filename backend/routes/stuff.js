@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const auth = require('../middleware/auth');
+const multer = require('../middleware/multer-config');
 
 // Import du modèle "Thing"
-const stuffController = require('../controllers/stuff.js');
+const stuffController = require('../controllers/stuff');
 
 // Middlewares
 router.use(express.json());
@@ -14,15 +16,15 @@ router.use((req, res, next) => {
     next();
 });
 
-router.post('/', stuffController.createThing);
+router.post('/', auth, multer, stuffController.createThing);
 
-router.get('/' + '', stuffController.getAllThings);
+router.get('/' + '', auth, stuffController.getAllThings);
 
-router.get('/:id', stuffController.getOneThing);
+router.get('/:id', auth, stuffController.getOneThing);
 
-router.put('/:id', stuffController.modifyThing);
+router.put('/:id', auth, multer, stuffController.modifyThing);
 
-router.delete('/:id', stuffController.deleteThing);
+router.delete('/:id', auth, stuffController.deleteThing);
 
 
 module.exports = router;
